@@ -24,6 +24,12 @@ final class AboutViewController: NSViewController {
 }
 
 private struct AboutSettingsView: View {
+    private var versionText: String {
+        let version = Bundle.main.releaseVersionNumber ?? ""
+        let build = Bundle.main.buildVersionNumber ?? ""
+        return "\("Version".localized) \(version) (\(build))"
+    }
+
     var body: some View {
         VStack(spacing: 12) {
             Image("ic_logo")
@@ -33,8 +39,7 @@ private struct AboutSettingsView: View {
             VStack(spacing: 4) {
                 Text("Hidden Bar").font(.title2).fontWeight(.semibold)
                 Text("Menu bar cleaner".localized).foregroundStyle(.secondary)
-                Text("Version".localized + " " + (Bundle.main.releaseVersionNumber ?? "")
-                     + " (" + (Bundle.main.buildVersionNumber ?? "") + ")")
+                Text(verbatim: versionText)
                     .font(.callout).foregroundStyle(.secondary)
             }
             Divider().padding(.vertical, 4)
