@@ -106,7 +106,7 @@
 		6B6D80CB37CBB7622AC8455D /* MenuBarExtraClassifierTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MenuBarExtraClassifierTests.swift; sourceTree = "<group>"; };
 		6F2F828CAAE82A4D34BDDCBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		9220587D22127050008A8B03 /* Hidden.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Hidden.entitlements; path = Hidden/Hidden.entitlements; sourceTree = "<group>"; };
-		929113F121F9D04100173149 /* Hidden Bar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hidden Bar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		929113F121F9D04100173149 /* Barfold.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Barfold.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		929113F421F9D04100173149 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		929113F821F9D04200173149 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		929113FB21F9D04200173149 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -310,7 +310,7 @@
 		929113F221F9D04100173149 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				929113F121F9D04100173149 /* Hidden Bar.app */,
+				929113F121F9D04100173149 /* Barfold.app */,
 				27A530C718790900F466C145 /* HiddenBarTests.xctest */,
 				9C7BF2ECD52E3E5C0D8D7556 /* HiddenTests.xctest */,
 			);
@@ -405,7 +405,7 @@
 				08A5F85E23AA01EE00981CA5 /* HotKey */,
 			);
 			productName = vanillaClone;
-			productReference = 929113F121F9D04100173149 /* Hidden Bar.app */;
+			productReference = 929113F121F9D04100173149 /* Barfold.app */;
 			productType = "com.apple.product-type.application";
 		};
 		38276456C8B72E6FF49DF8FB /* HiddenBarTests */ = {
@@ -653,7 +653,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hidden Bar.app/Contents/MacOS/Hidden Bar";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Barfold.app/Contents/MacOS/Barfold";
 			};
 			name = Release;
 		};
@@ -671,7 +671,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hidden Bar.app/Contents/MacOS/Hidden Bar";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Barfold.app/Contents/MacOS/Barfold";
 			};
 			name = "Debug-Direct";
 		};
@@ -689,7 +689,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hidden Bar.app/Contents/MacOS/Hidden Bar";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Barfold.app/Contents/MacOS/Barfold";
 			};
 			name = "Release-Direct";
 		};
@@ -830,7 +830,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.11.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dwarvesv.minimalbar;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = Hidden_Bar;
+				PRODUCT_NAME = Barfold;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -856,7 +857,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.11.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dwarvesv.minimalbar;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = Hidden_Bar;
+				PRODUCT_NAME = Barfold;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -945,7 +947,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.11.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dwarvesv.minimalbar;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = Hidden_Bar;
+				PRODUCT_NAME = Barfold;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1031,7 +1034,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.11.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dwarvesv.minimalbar;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = Hidden_Bar;
+				PRODUCT_NAME = Barfold;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1123,7 +1127,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hidden Bar.app/Contents/MacOS/Hidden Bar";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Barfold.app/Contents/MacOS/Barfold";
 			};
 			name = Debug;
 		};

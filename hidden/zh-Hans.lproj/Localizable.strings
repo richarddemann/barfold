@@ -25,7 +25,7 @@
 ";
 
 /* General settings (moved from Main.storyboard) */
-"Start Hidden Bar when I log in" = "在登录时启动 Hidden Bar";
+"Start Hidden Bar when I log in" = "在登录时启动 Barfold";
 "Show preferences on launch" = "在应用程序启动时显示偏好设置";
 "Use the full MenuBar on expanding" = "展开隐藏区域时使用完整的菜单栏";
 "Enable always hidden section" = "启用持续隐藏区域";

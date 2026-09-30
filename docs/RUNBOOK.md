@@ -12,7 +12,7 @@ The script builds Debug-Direct with an ad-hoc signature and launches the app fro
 ./script/build_and_run.sh --install
 ```
 
-This backs up any installed app under `~/Library/Application Support/Hidden Bar Fix/Backups`, copies the build to `/Applications/Hidden Bar.app`, and launches it. Use that location for macOS 27 menu-bar verification: native visibility resolves apps by bundle identifier, and running multiple copies can hide Hidden Bar's own arrow.
+This backs up any installed app under `~/Library/Application Support/Barfold/Backups`, copies the build to `/Applications/Barfold.app`, and launches it. Use that location for macOS 27 menu-bar verification: native visibility resolves apps by bundle identifier, and running multiple copies can hide Barfold's own arrow.
 
 Ad-hoc signatures identify a specific build. Rebuilding can invalidate its existing Accessibility approval. Finish and install the build before authorizing it; if macOS keeps an old entry enabled but the app still reports missing access, remove that entry and add the exact installed app again. A stable Developer ID signature is needed for a smoother update experience.
 
