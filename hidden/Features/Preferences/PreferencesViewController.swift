@@ -200,7 +200,7 @@ final class GeneralSettingsModel: ObservableObject {
             if Preferences.isAutoStart != wanted {
                 let alert = NSAlert()
                 alert.messageText = "Could not update the login item".localized
-                alert.informativeText = "Check System Settings > General > Login Items and make sure Hidden Bar is allowed.".localized
+                alert.informativeText = "Check System Settings > General > Login Items and make sure Hidden Bar is allowed.".localized.replacingOccurrences(of: "Hidden Bar", with: "Barfold")
                 alert.alertStyle = .warning
                 alert.runModal()
             }
@@ -334,7 +334,7 @@ struct GeneralSettingsView: View {
         HStack(spacing: 10) {
             Image(systemName: "exclamationmark.triangle.fill")
                 .foregroundStyle(.orange)
-            Text(verbatim: "Hidden Bar needs Accessibility access to hide icons.".localized)
+            Text(verbatim: "Hidden Bar needs Accessibility access to hide icons.".localized.replacingOccurrences(of: "Hidden Bar", with: "Barfold"))
                 .font(.callout)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)

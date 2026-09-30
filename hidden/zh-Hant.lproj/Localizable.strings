@@ -31,7 +31,7 @@
 ";
 
 /* General settings (moved from Main.storyboard) */
-"Start Hidden Bar when I log in" = "登入時啟動 Hidden Bar";
+"Start Hidden Bar when I log in" = "登入時啟動 Barfold";
 "Show preferences on launch" = "啟動時顯示偏好設定";
 "Use the full MenuBar on expanding" = "展開隱藏區時淨空選單列";
 "Enable always hidden section" = "啟用持續隱藏區域";
@@ -40,7 +40,7 @@
 "Hidden" = "隱藏區";
 "Shown" = "顯示區";
 "⭐️Always Hidden" = "⭐️ 持續隱藏";
-"In your Mac's menu bar, hold ⌘ and drag icons\nbetween sections to configure Hidden Bar." = "按住 ⌘ 並在區塊間拖曳 Mac 選單列的圖示\n就是 Hidden Bar 的設定方法。";
+"In your Mac's menu bar, hold ⌘ and drag icons\nbetween sections to configure Hidden Bar." = "按住 ⌘ 並在區塊間拖曳 Mac 選單列的圖示\n就是 Barfold 的設定方法。";
 "5 seconds" = "5 秒";
 "10 seconds" = "10 秒";
 "15 seconds" = "15 秒";

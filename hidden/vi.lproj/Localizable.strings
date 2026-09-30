@@ -23,7 +23,7 @@ Các bước thực hiện:
 ";
 
 /* General settings (moved from Main.storyboard) */
-"Start Hidden Bar when I log in" = "Chạy Hidden Bar khi khởi động";
+"Start Hidden Bar when I log in" = "Chạy Barfold khi khởi động";
 "Show preferences on launch" = "Hiện tuỳ chọn lúc khởi chạy";
 "Use the full MenuBar on expanding" = "Sử dụng toàn thanh công cụ khi mở rộng";
 "Enable always hidden section" = "Bật tính năng luôn ẩn";

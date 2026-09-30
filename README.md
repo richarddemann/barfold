@@ -1,50 +1,67 @@
-# Hidden Bar Fix
+<p align="center">
+  <img src="hidden/Assets.xcassets/AppIcon.appiconset/icon_128@2x.png" width="96" alt="Barfold icon">
+</p>
+<h1 align="center">Barfold</h1>
+<p align="center">A little more room in your menu bar.</p>
 
-A focused fork of [Hidden Bar](https://github.com/dwarvesf/hidden), the macOS utility that hides menu bar icons.
+**Barfold is an independent fork of [Hidden Bar](https://github.com/dwarvesf/hidden), created by Dwarves Foundation and its contributors.** It preserves their menu-bar hiding engine and source history, with refined native settings, clearer Accessibility setup, and a distinct visual identity.
 
-This fork keeps the existing hiding behavior and replaces the preferences layout with compact native controls. General and About share a window width, the tabs stay centered, and shortcut recording cancels when the window closes or loses focus. The direct build also includes the macOS 27 hiding engine and Accessibility onboarding.
+<p align="center">
+  <img src="img/preferences.png" width="460" alt="Barfold settings with centered General and About tabs and aligned switches">
+</p>
 
-<img src="img/preferences.png" width="500" alt="Hidden Bar preferences with native General and About toolbar tabs">
+### What changed
 
-## Build and run
+- Compact native settings with a centered, balanced General / About control.
+- Consistent rows, aligned switches, and a concise menu-bar placement guide.
+- Accessibility onboarding that explains why hiding is unavailable and recovers when permission changes.
+- Shortcut recording that cancels cleanly on Escape, tab changes, window close, or loss of focus.
+- A simple new icon, with editable vector sources in [brand](brand).
 
-Requires macOS 13 or later and Xcode with its command-line tools selected.
+The macOS 27 native hiding engine comes from upstream Hidden Bar ([#403](https://github.com/dwarvesf/hidden/pull/403)). The functional fixes and settings improvements are proposed upstream in [#433](https://github.com/dwarvesf/hidden/pull/433). Barfold’s name and logo stay in this fork.
+
+### Build and run
+
+Requires macOS 13 or later and Xcode. Build with Xcode 27 to include the newest native tab styling; the project also builds with older supported SDKs.
 
 ```sh
-git clone https://github.com/richarddemann/hiddenbarfix.git
-cd hiddenbarfix
-./script/build_and_run.sh --verify
+git clone https://github.com/richarddemann/barfold.git
+cd barfold
+./script/build_and_run.sh
 ```
 
-The script builds the **Hidden Bar** scheme using **Debug-Direct**, signs it locally with an ad-hoc signature, and launches it. No Apple developer account is required. It stops an existing Hidden Bar process before launching the new build.
-
-For daily use, install the build in Applications:
+To install locally:
 
 ```sh
 ./script/build_and_run.sh --install
 ```
 
-Installation backs up an existing `/Applications/Hidden Bar.app` before replacing it. This fork uses the original bundle identifier so existing settings carry over; run one copy at a time.
+The script creates an ad-hoc signed `Barfold.app`, backs up an existing Barfold installation, and installs it in `/Applications`. The Xcode project and scheme retain their upstream **Hidden Bar** names.
 
-## Usage
+Barfold currently shares Hidden Bar’s bundle identifier so existing settings carry over. **Run one copy at a time.** The scripts stop either app before launching Barfold; an existing Hidden Bar installation is kept intact.
 
-Hold ⌘ and drag icons to the hidden side, then click the arrow to expand or collapse. On macOS 27, the arrow is the boundary. Earlier versions use the separator. Right-click the arrow for the context menu; Option-click it to hide or reveal the always-hidden section.
+### Use it
 
-On macOS 27, run from `/Applications` and allow Hidden Bar in **System Settings → Privacy & Security → Accessibility**. Preferences explains the permission when it is missing. The direct build uses a private macOS visibility API; the sandboxed App Store build does not support hiding on macOS 27. This repository does not distribute a notarized release, and Homebrew's `hiddenbar` cask installs upstream rather than this fork.
+Hold **⌘** and drag menu-bar icons to the hidden side, then click the arrow to show or hide them. On macOS 27, the arrow marks the boundary; earlier versions use a separator. Option-click the arrow to toggle the always-hidden section. Right-click for the context menu and notch-overflow access.
 
-## Verification
+On macOS 27, allow the installed app under **System Settings → Privacy & Security → Accessibility** (called Device Control and Data Access on some versions). Settings explains when access is missing.
+
+Ad-hoc signing ties approval to a specific build. Finish installing before authorizing the app. If an old entry remains enabled but Barfold still reports missing access, remove that entry and add `/Applications/Barfold.app` again.
+
+### Checks and limitations
 
 ```sh
 ./script/test.sh
 ```
 
-Tests cover the hiding engines, login-item transitions, menu-bar actions, notch geometry and menus, preference persistence, and shortcut validation. Real menu-bar interaction still needs a manual check on the target Mac; see the [runbook](docs/RUNBOOK.md).
+The suite covers menu-bar layout decisions, engine state changes, shortcut validation, and settings behavior. See the [build and verification guide](docs/RUNBOOK.md) for live checks.
 
-- [User manual](docs/MANUAL.md)
-- [Architecture](docs/ARCHITECTURE.md)
-- [Build and verification](docs/RUNBOOK.md)
-- [Known limitations](docs/BACKLOG.md)
+On macOS 27, the direct build uses a private system visibility API. Hiding is per app, and system items remain visible. The sandboxed App Store build cannot use this engine. External-display behavior still needs a visual hardware check.
 
-## Credits and license
+This repository publishes source, **not a notarized app release**. Homebrew’s `hiddenbar` cask installs the original Hidden Bar, not Barfold.
 
-Hidden Bar was created by Dwarves Foundation and its contributors. This fork retains their source history and the [MIT license](LICENSE).
+### Credits and license
+
+Original app: **Hidden Bar**, by **Dwarves Foundation and contributors**. Barfold retains the original commit history and copyright notices and is distributed under the [MIT license](LICENSE). It is independently maintained and is not an official Dwarves Foundation release.
+
+[Report an issue](https://github.com/richarddemann/barfold/issues) · [Original project](https://github.com/dwarvesf/hidden) · [Upstream contribution](https://github.com/dwarvesf/hidden/pull/433)
