@@ -50,4 +50,13 @@ defaults import com.dwarvesv.minimalbar backup.plist
 
 ## Distribution
 
-The source is MIT licensed. A local ad-hoc build is not a notarized distribution. A public app release needs a Developer ID archive, notarization and stapling. Use Release-Direct for a direct download; the sandboxed App Store scheme cannot hide icons on macOS 27. Keep signing identities and credentials outside the repository.
+The source is MIT licensed. A local ad-hoc build is not a notarized distribution. For a download that works with default Gatekeeper settings, use Developer ID signing, notarization and stapling. The current public preview is explicitly ad-hoc signed and unnotarized. Use Release-Direct for a direct download; the sandboxed App Store scheme cannot hide icons on macOS 27. Keep signing identities and credentials outside the repository.
+
+
+To reproduce the universal preview DMG:
+
+```sh
+./script/package_preview.sh 1.0.0 17
+```
+
+This builds Release-Direct for Apple silicon and Intel, checks its signature and architectures, and writes `dist/Barfold-1.0.0-preview.dmg` and `dist/SHA256SUMS.txt`. It does not install or launch the app, and does not notarize it. The DMG contains Barfold, an Applications shortcut, the MIT license and a short installation note. Upload only those two named release files; `dist` can contain older local artifacts.

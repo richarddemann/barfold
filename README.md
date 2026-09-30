@@ -10,7 +10,15 @@ Barfold is a fork of **[Hidden Bar](https://github.com/dwarvesf/hidden)** by Dwa
   <img src="img/preferences.png" width="460" alt="Barfold settings">
 </p>
 
-### Install from source
+### Download
+
+[Download Barfold for Mac](https://github.com/richarddemann/barfold/releases/tag/v1.0.0-preview.1) — macOS 13 or later, Apple silicon and Intel. No Xcode needed.
+
+Open the DMG and drag Barfold into Applications. Quit Hidden Bar before opening it.
+
+This preview is **not notarized by Apple**, so macOS may block its first launch. See [Apple’s instructions](https://support.apple.com/102445). A notarized release is still to come.
+
+### Build from source
 
 Requires macOS 13 or later and Xcode. Use Xcode 27 for the latest native controls.
 
@@ -20,7 +28,7 @@ cd barfold
 ./script/build_and_run.sh --install
 ```
 
-This builds and installs `/Applications/Barfold.app`. There isn’t a signed, notarized download yet.
+This builds and installs `/Applications/Barfold.app`.
 
 Barfold uses Hidden Bar’s existing settings. Run one at a time; the script stops either app before launching Barfold.
 
