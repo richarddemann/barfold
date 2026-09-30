@@ -440,7 +440,7 @@ private struct MenuBarPreview: View {
             if showsSeparator {
                 onIconRow(icon("seprated"))
             }
-            onIconRow(icon("ico_collapse")
+            onIconRow(icon("barfold_collapse")
                 .frame(width: 22, height: 22)
                 .background(Color.accentColor.opacity(0.2), in: RoundedRectangle(cornerRadius: 5)))
             section(["wifi", "magnifyingglass", "switch.2"], title: "Shown".localized, style: .primary)
@@ -456,8 +456,9 @@ private struct MenuBarPreview: View {
     }
 
     private func icon(_ name: String) -> some View {
-        let image = ["ico_collapse", "seprated", "seprated_1"].contains(name)
-            ? Image(name) : Image(systemName: name)
+        let image = name == "barfold_collapse"
+            ? Image(nsImage: Assets.collapseImage)
+            : (["seprated", "seprated_1"].contains(name) ? Image(name) : Image(systemName: name))
         return image
             .renderingMode(.template)
             .resizable()
