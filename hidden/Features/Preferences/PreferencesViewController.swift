@@ -21,7 +21,7 @@ class PreferencesViewController: NSViewController {
 
     // The content scrolls for longer translations and smaller displays.
     private var preferredHeight: CGFloat {
-        return Util.isAccessibilityPermissionMissing ? 450 : 390
+        return Util.isAccessibilityPermissionMissing ? 395 : 340
     }
 
     public var listening = false {
@@ -51,7 +51,7 @@ class PreferencesViewController: NSViewController {
             hostingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             hostingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hostingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            view.widthAnchor.constraint(equalToConstant: 500),
+            view.widthAnchor.constraint(equalToConstant: 460),
             heightConstraint
         ])
 
@@ -254,110 +254,136 @@ struct GeneralSettingsView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                VStack(spacing: 10) {
-                    MenuBarPreview(alwaysHidden: Preferences.alwaysHiddenSectionEnabled)
-                        .frame(maxWidth: .infinity)
-                    Text(verbatim: MenuBarEngineFactory.usesNativeVisibility
-                         ? "Hold ⌘ and drag icons to the left of the arrow to hide them.".localized
-                         : Self.label("In your Mac's menu bar, hold ⌘ and drag icons\nbetween sections to configure Hidden Bar.").replacingOccurrences(of: "\n", with: " "))
-                        .font(.callout)
+            VStack(spacing: 18) {
+                tutorial
+                if model.isAccessibilityPermissionMissing {
+                    accessibilityNotice
+                }
+                Divider()
+                Grid(alignment: .leading, horizontalSpacing: 14, verticalSpacing: 20) {
+                    GridRow(alignment: .firstTextBaseline) {
+                        groupLabel("Startup")
+                        VStack(alignment: .leading, spacing: 8) {
+                            Toggle(Self.label("Start Hidden Bar when I log in"), isOn: model.autoStart)
+                            Toggle(Self.label("Show preferences on launch"), isOn: model.showPreferencesOnLaunch)
+                        }
+                    }
+                    GridRow(alignment: .firstTextBaseline) {
+                        groupLabel("Menu Bar")
+                        menuBarOptions
+                    }
+                    GridRow(alignment: .firstTextBaseline) {
+                        groupLabel("Shortcut")
+                        shortcutRecorder
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(20)
+            .frame(maxWidth: .infinity)
+        }
+        .font(.system(size: 13))
+        .toggleStyle(.checkbox)
+        .controlSize(.small)
+        .background(Color(nsColor: .windowBackgroundColor))
+    }
+
+    private func groupLabel(_ key: String) -> some View {
+        Text(verbatim: Self.label(key))
+            .foregroundStyle(.secondary)
+            .multilineTextAlignment(.trailing)
+            .frame(width: 74, alignment: .trailing)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private var tutorial: some View {
+        VStack(spacing: 8) {
+            MenuBarPreview(alwaysHidden: Preferences.alwaysHiddenSectionEnabled)
+                .frame(maxWidth: .infinity)
+            Text(verbatim: MenuBarEngineFactory.usesNativeVisibility
+                 ? "Hold ⌘ and drag icons to the left of the arrow to hide them.".localized
+                 : Self.label("In your Mac's menu bar, hold ⌘ and drag icons\nbetween sections to configure Hidden Bar.").replacingOccurrences(of: "\n", with: " "))
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private var accessibilityNotice: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.orange)
+            Text(verbatim: "Hidden Bar needs Accessibility access to hide icons.".localized)
+                .font(.callout)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+            Button("Open Settings…".localized) {
+                Util.requestAccessibilityPermission()
+            }
+        }
+    }
+
+    private var menuBarOptions: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                Toggle(Self.label("Automatically hide icon after: "), isOn: model.autoHide)
+                Picker("", selection: model.autoHideDelay) {
+                    ForEach(autoHideDelays.indices, id: \.self) { index in
+                        Text(verbatim: autoHideDelays[index].localized).tag(index)
+                    }
+                }
+                .labelsHidden()
+                .frame(width: 100)
+                .disabled(!model.autoHide.wrappedValue)
+            }
+            Toggle(Self.label("Use the full MenuBar on expanding"), isOn: model.useFullMenuBar)
+            HStack(spacing: 6) {
+                Toggle(Self.label("Enable always hidden section"), isOn: model.alwaysHiddenSection)
+                Button {
+                    showsAlwaysHiddenHelp.toggle()
+                } label: {
+                    Image(systemName: "questionmark.circle")
                         .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Always-hidden section help".localized)
+                .popover(isPresented: $showsAlwaysHiddenHelp, arrowEdge: .trailing) {
+                    Text(verbatim: MenuBarEngineFactory.usesNativeVisibility
+                         ? "Place the always-hidden separator to the left of the arrow, then ⌘-drag icons to its left. Option-click the arrow to hide or reveal that section.".localized
+                         : "Place the always-hidden separator to the left of the regular separator, then ⌘-drag icons to its left. Option-click the arrow to hide or reveal that section.".localized)
+                        .padding()
+                        .frame(width: 320)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                .padding(.bottom, 2)
-
-                if model.isAccessibilityPermissionMissing {
-                    HStack(alignment: .top, spacing: 10) {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .foregroundStyle(.orange)
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(verbatim: "Accessibility access needed".localized)
-                                .fontWeight(.medium)
-                            Text(verbatim: "Hidden Bar needs Accessibility access to hide icons.".localized)
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer(minLength: 0)
-                        Button("Open Settings…".localized) {
-                            Util.requestAccessibilityPermission()
-                        }
-                    }
-                }
-
-                Divider()
-                VStack(alignment: .leading, spacing: 10) {
-                    Toggle(Self.label("Start Hidden Bar when I log in"), isOn: model.autoStart)
-                    Toggle(Self.label("Show preferences on launch"), isOn: model.showPreferencesOnLaunch)
-                }
-                Divider()
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack(spacing: 8) {
-                        Toggle(Self.label("Automatically hide icon after: "), isOn: model.autoHide)
-                        Picker("", selection: model.autoHideDelay) {
-                            ForEach(autoHideDelays.indices, id: \.self) { index in
-                                Text(verbatim: autoHideDelays[index].localized).tag(index)
-                            }
-                        }
-                        .labelsHidden()
-                        .frame(width: 115)
-                        .disabled(!model.autoHide.wrappedValue)
-                    }
-                    Toggle(Self.label("Use the full MenuBar on expanding"), isOn: model.useFullMenuBar)
-                    HStack(spacing: 6) {
-                        Toggle(Self.label("Enable always hidden section"), isOn: model.alwaysHiddenSection)
-                        Button {
-                            showsAlwaysHiddenHelp.toggle()
-                        } label: {
-                            Image(systemName: "questionmark.circle")
-                                .foregroundStyle(.secondary)
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel("Always-hidden section help".localized)
-                        .popover(isPresented: $showsAlwaysHiddenHelp, arrowEdge: .trailing) {
-                            Text(verbatim: MenuBarEngineFactory.usesNativeVisibility
-                                 ? "Place the always-hidden separator to the left of the arrow, then ⌘-drag icons to its left. Option-click the arrow to hide or reveal that section.".localized
-                                 : "Place the always-hidden separator to the left of the regular separator, then ⌘-drag icons to its left. Option-click the arrow to hide or reveal that section.".localized)
-                                .padding()
-                                .frame(width: 380)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                    }
-                    if NotchOverflowController.hasNotch {
-                        Toggle(Self.label("Enable Notch Overflow (right-click ‹ to access hidden icons)"), isOn: model.notchOverflow)
-                            .help("Right-click the arrow to access icons behind the notch.".localized)
-                    }
-                }
-                Divider()
-                HStack(spacing: 8) {
-                    Text(verbatim: Self.label("Global Shortcut"))
-                    Spacer()
-                    Button {
-                        model.onRecordShortcut()
-                    } label: {
-                        Text(verbatim: shortcutButtonTitle)
-                            .frame(minWidth: 95)
-                    }
-                    if model.shortcutTitle != nil && !model.isRecordingShortcut {
-                        Button {
-                            model.onClearShortcut()
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(.secondary)
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel("Clear".localized)
-                        .help("Clear".localized)
-                    }
-                }
             }
-            .padding(24)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            if NotchOverflowController.hasNotch {
+                Toggle(Self.label("Enable Notch Overflow (right-click ‹ to access hidden icons)"), isOn: model.notchOverflow)
+                    .help("Right-click the arrow to access icons behind the notch.".localized)
+            }
         }
-        .toggleStyle(.checkbox)
-        .controlSize(.regular)
-        .background(Color(nsColor: .windowBackgroundColor))
+    }
+
+    private var shortcutRecorder: some View {
+        HStack(spacing: 8) {
+            Button {
+                model.onRecordShortcut()
+            } label: {
+                Text(verbatim: shortcutButtonTitle)
+                    .frame(minWidth: 85)
+            }
+            if model.shortcutTitle != nil && !model.isRecordingShortcut {
+                Button {
+                    model.onClearShortcut()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Clear".localized)
+                .help("Clear".localized)
+            }
+        }
     }
 
     private var shortcutButtonTitle: String {

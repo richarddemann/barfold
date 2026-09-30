@@ -13,8 +13,8 @@ final class AboutViewController: NSViewController {
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hostingView)
         NSLayoutConstraint.activate([
-            view.widthAnchor.constraint(equalToConstant: 500),
-            view.heightAnchor.constraint(equalToConstant: 350),
+            view.widthAnchor.constraint(equalToConstant: 460),
+            view.heightAnchor.constraint(equalToConstant: 340),
             hostingView.topAnchor.constraint(equalTo: view.topAnchor),
             hostingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             hostingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -31,25 +31,32 @@ private struct AboutSettingsView: View {
     }
 
     var body: some View {
-        VStack(spacing: 12) {
-            Image("ic_logo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 64, height: 64)
-            VStack(spacing: 4) {
-                Text("Hidden Bar").font(.title2).fontWeight(.semibold)
-                Text("Menu bar cleaner".localized).foregroundStyle(.secondary)
-                Text(verbatim: versionText)
-                    .font(.callout).foregroundStyle(.secondary)
+        VStack(spacing: 20) {
+            HStack(spacing: 16) {
+                Image("ic_logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 60, height: 60)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Hidden Bar").font(.title2).fontWeight(.semibold)
+                    Text("Menu bar cleaner".localized).foregroundStyle(.secondary)
+                    Text(verbatim: versionText)
+                        .font(.callout).foregroundStyle(.secondary)
+                }
             }
-            Divider().padding(.vertical, 4)
-            Link("Source code".localized, destination: URL(string: "https://github.com/richarddemann/hiddenbarfix")!)
-            Link("Report an issue".localized, destination: URL(string: "https://github.com/richarddemann/hiddenbarfix/issues")!)
-            Link("Original project".localized, destination: URL(string: "https://github.com/dwarvesf/hidden")!)
-            Text("MIT © Dwarves Foundation")
-                .font(.caption).foregroundStyle(.secondary)
+            HStack(spacing: 20) {
+                Link("Source code".localized, destination: URL(string: "https://github.com/richarddemann/hiddenbarfix")!)
+                Link("Report an issue".localized, destination: URL(string: "https://github.com/richarddemann/hiddenbarfix/issues")!)
+            }
+            VStack(spacing: 6) {
+                Link("Original project".localized, destination: URL(string: "https://github.com/dwarvesf/hidden")!)
+                Text("MIT © Dwarves Foundation")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.caption)
         }
-        .padding(24)
+        .font(.system(size: 13))
+        .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(nsColor: .windowBackgroundColor))
     }

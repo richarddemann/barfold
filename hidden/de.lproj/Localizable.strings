@@ -61,3 +61,8 @@ Zum Anzeigen der permanent ausgeblendeten Symbole:
 "Original project" = "Originalprojekt";
 "Place the always-hidden separator to the left of the arrow, then ⌘-drag icons to its left. Option-click the arrow to hide or reveal that section." = "Platziere den Trenner für dauerhaft ausgeblendete Symbole links vom Pfeil und ziehe mit ⌘ Symbole links davon. Klicke mit gedrückter Wahltaste auf den Pfeil, um diesen Bereich aus- oder einzublenden.";
 "Place the always-hidden separator to the left of the regular separator, then ⌘-drag icons to its left. Option-click the arrow to hide or reveal that section." = "Platziere den Trenner für dauerhaft ausgeblendete Symbole links vom normalen Trenner und ziehe mit ⌘ Symbole links davon. Klicke mit gedrückter Wahltaste auf den Pfeil, um diesen Bereich aus- oder einzublenden.";
+
+"Startup" = "Beim Start";
+"Menu Bar" = "Menüleiste";
+
+"Shortcut" = "Kurzbefehl";
