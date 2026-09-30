@@ -1,11 +1,7 @@
-## Privacy Policy
+# Privacy
 
-Dwarves Foundation built the Hidden Bar app as an Open Source app. This app is provided by Dwarves Foundation at no cost and is intended for use as is.
+Hidden Bar Fix is a local macOS utility derived from Dwarves Foundation's Hidden Bar. It stores preferences in macOS UserDefaults and does not include analytics or remote account services.
 
-**Information Collection and Use**
+Accessibility access is used to inspect menu-bar items for the macOS 27 hiding engine and notch-overflow feature. Opening source-code or issue links launches the browser and connects to GitHub. GitHub issue reports are public; include only information you want to share.
 
-The app does NOT use any third party services that may collect information used to identify you.
-
-**Contact Us**
-
-If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at macos@d.foundation.
+Questions about this fork can be raised in its [issue tracker](https://github.com/richarddemann/hiddenbarfix/issues). The original project and MIT attribution remain credited in the repository.

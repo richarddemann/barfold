@@ -1,86 +1,50 @@
-<p align="center">
-	<img width="200" height="200" margin-right="100%" src="https://github.com/dwarvesf/hidden/blob/develop/img/icon_512%402x.png?raw=true">
-</p>
-<p align="center">
-	<a href="https://webuild.community">
-		<img src="https://raw.githubusercontent.com/webuild-community/badge/master/svg/love.svg" />
-	</a>
-	<a href="https://github.com/dwarvesf/hidden/releases/latest">
- 		<img src="https://img.shields.io/badge/download-latest-brightgreen.svg" alt="download">
-	</a>
-	<a href="https://img.shields.io/badge/platform-macOS-lightgrey.svg">
- 		<img src="https://img.shields.io/badge/platform-macOS-lightgrey.svg" alt="platform">
-	</a>
-	<a href="https://img.shields.io/badge/requirements-macOS Ventura+-ff69b4.svg">
- 		<img src="https://img.shields.io/badge/requirements-macOS Ventura+-ff69b4.svg" alt="systemrequirements">
-	</a>
-</p>
+# Hidden Bar Fix
 
-## Hidden Bar
-Hidden Bar lets you hide menu bar items to give your Mac a cleaner look.
+A focused fork of [Hidden Bar](https://github.com/dwarvesf/hidden), the macOS utility that hides menu bar icons.
 
-<p align="center">
-	<img width="400" src="img/screen1.png">
-	<img width="400" src="img/screen2.png">
-</p>
+This fork keeps the existing hiding behavior and replaces the preferences layout with compact native controls. General and About share a window width, the tabs stay centered, and shortcut recording cancels when the window closes or loses focus. The direct build also includes the macOS 27 hiding engine and Accessibility onboarding.
 
-## 🚀 Install
+<img src="img/preferences.png" width="500" alt="Hidden Bar preferences with native General and About toolbar tabs">
 
-###  App Store
+## Build and run
 
-[![AppStore](img/appstore.svg)](https://itunes.apple.com/app/hidden-bar/id1452453066)
+Requires macOS 13 or later and Xcode with its command-line tools selected.
 
-### Others
-
-The Hidden Bar is notarized before distributed out side App Store. It's safe to use 👍
-
-#### Using Homebrew
-
-```
-brew install --cask hiddenbar
+```sh
+git clone https://github.com/richarddemann/hiddenbarfix.git
+cd hiddenbarfix
+./script/build_and_run.sh --verify
 ```
 
-#### Manual download
+The script builds the **Hidden Bar** scheme using **Debug-Direct**, signs it locally with an ad-hoc signature, and launches it. No Apple developer account is required. It stops an existing Hidden Bar process before launching the new build.
 
-- [Download latest version](https://github.com/dwarvesf/hidden/releases/latest)
-- Open and drag the app to the Applications folder.
-- Launch Hidden and drag the icon in your menu bar (hold CMD) to the right so it is between some other icons.
+For daily use, install the build in Applications:
 
-## 🕹 Usage
+```sh
+./script/build_and_run.sh --install
+```
 
-* `⌘` + drag to move the Hidden icons around in the menu bar.
-* Click the Arrow icon to hide menu bar items.
+Installation backs up an existing `/Applications/Hidden Bar.app` before replacing it. This fork uses the original bundle identifier so existing settings carry over; run one copy at a time.
 
-<p align="center">
-	<img src="img/tutorial.gif">
-</p>
+## Usage
 
-## 📚 Documentation
+Hold ⌘ and drag icons to the hidden side, then click the arrow to expand or collapse. On macOS 27, the arrow is the boundary. Earlier versions use the separator. Right-click the arrow for the context menu; Option-click it to hide or reveal the always-hidden section.
 
-- [Manual](docs/MANUAL.md): every setting, the hidden Terminal-only options, and troubleshooting.
-- [Architecture](docs/ARCHITECTURE.md): how the hiding trick works, topology, and known limits.
-- [Maintainer runbook](docs/RUNBOOK.md): build, behavioral verification, and release process.
+On macOS 27, run from `/Applications` and allow Hidden Bar in **System Settings → Privacy & Security → Accessibility**. Preferences explains the permission when it is missing. The direct build uses a private macOS visibility API; the sandboxed App Store build does not support hiding on macOS 27. This repository does not distribute a notarized release, and Homebrew's `hiddenbar` cask installs upstream rather than this fork.
 
-## ✨<a href="https://github.com/dwarvesf/hidden/graphs/contributors">Contributors</a>
+## Verification
 
-This project exists thanks to all the people who contribute. Thank you guys so much 👏
+```sh
+./script/test.sh
+```
 
-[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/0)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/0)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/1)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/1)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/2)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/2)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/3)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/3)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/4)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/4)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/5)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/5)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/6)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/6)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/7)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/7)
+Tests cover the hiding engines, login-item transitions, menu-bar actions, notch geometry and menus, preference persistence, and shortcut validation. Real menu-bar interaction still needs a manual check on the target Mac; see the [runbook](docs/RUNBOOK.md).
 
-Please read [this](CONTRIBUTING.md) before you make a contribution.
+- [User manual](docs/MANUAL.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Build and verification](docs/RUNBOOK.md)
+- [Known limitations](docs/BACKLOG.md)
 
-## Requirements
-macOS version >= 13.0 (Ventura)
+## Credits and license
 
-Running an older macOS? The last release supporting macOS 10.13 High Sierra
-through 12 Monterey is [v1.10](https://github.com/dwarvesf/hidden/releases/tag/v1.10).
-Later versions require macOS 13 because autostart moved to the `SMAppService`
-API introduced there.
-
-## You may also like
-- [Blurred](https://github.com/dwarvesf/Blurred) - A macOS utility that helps reduce distraction by dimming your inactive noise
-- [Micro Sniff](https://github.com/dwarvesf/micro-sniff) - An ultra-light macOS utility that notify whenever your micro-device is being used
-- [VimMotion](https://github.com/dwarvesf/VimMotionPublic) Vim style shortcut for MacOS
-## License
-
-MIT &copy; [Dwarves Foundation](https://github.com/dwarvesf)
+Hidden Bar was created by Dwarves Foundation and its contributors. This fork retains their source history and the [MIT license](LICENSE).

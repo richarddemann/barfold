@@ -137,3 +137,9 @@ DerivedData/
 /docs/specs/
 /docs/implementation-notes/
 /.planning/
+
+# Local packaging and preference backups
+/dist/
+/backup.plist
+*.xcresult
+/.codex/

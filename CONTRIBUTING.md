@@ -10,7 +10,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 1. Ensure any install or build dependencies are removed before the end of the layer when doing a 
    build.
 2. Please fully test whether the existing features are affected by your modifications.
-3. Follow the git-flow workflow. You can see more about git-flow [here](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+3. Run `./script/test.sh` and describe any manual verification. Keep changes focused and target the default branch.
 
 ### Branch name convention
 
@@ -59,7 +59,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ### Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at [INSERT CONTACT METHOD]. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at the repository owner through GitHub. All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
 

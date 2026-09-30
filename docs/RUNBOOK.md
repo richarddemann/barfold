@@ -1,89 +1,51 @@
-# Maintainer runbook
+# Build and verification
 
-Build, verify, and release Hidden Bar. Assumes current Xcode on macOS 13+.
-
-## Build
+## Local build
 
 ```sh
-# CI-style build, no signing required
-xcodebuild -project 'Hidden Bar.xcodeproj' -scheme 'Hidden Bar' \
-  -configuration Debug CODE_SIGNING_ALLOWED=NO build
-
-# runnable local build (uses your Apple Development identity)
-xcodebuild -project 'Hidden Bar.xcodeproj' -scheme 'Hidden Bar' \
-  -configuration Debug build
+./script/build_and_run.sh --verify
 ```
 
-Both must exit 0 with **no** `MACOSX_DEPLOYMENT_TARGET` override; the floor is
-13.0 in the project file. The single expected warning is the deliberately
-deprecated `SMLoginItemSetEnabled(false)` call that cleans up legacy installs.
+The script builds Debug-Direct with an ad-hoc signature and launches the app from `build/Build/Products/Debug-Direct`. It needs Xcode, not a developer signing identity. `--debug` launches under LLDB; `--logs` and `--telemetry` stream the app's unified logs.
 
-## Behavioral verification (no test target exists; this is the methodology)
+```sh
+./script/build_and_run.sh --install
+```
 
-The repo has no unit-test infrastructure; behavior is verified against the real
-menu bar. Two building blocks make that scriptable:
+This backs up any installed app under `~/Library/Application Support/Hidden Bar Fix/Backups`, copies the build to `/Applications/Hidden Bar.app`, and launches it. Use that location for macOS 27 menu-bar verification: native visibility resolves apps by bundle identifier, and running multiple copies can hide Hidden Bar's own arrow.
 
-1. **Truth signal**: the separator's AX size.
-   `osascript -e 'tell application "System Events" to tell process "Hidden Bar" to get size of menu bar item 2 of menu bar 2'`
-   reads ~20pt expanded vs ~2x-screen-width collapsed. Item 1 is the arrow.
-2. **Real clicks, not AXPress**: `AXPress` on the arrow is a no-op because the
-   action handler reads `NSApp.currentEvent` (nil under assistive synthesis;
-   known accessibility defect). Post real `CGEvent` mouse clicks at the arrow's
-   AX-reported coordinates instead.
+## Automated checks
 
-Standard checks before any release:
+```sh
+./script/test.sh
+```
 
-- expand/collapse toggle flips the separator size both ways;
-- with `numberOfSecondForAutoHide` set to 3, an expanded bar survives 2x the
-  window while the pointer is parked in the menubar band, collapses within the
-  window once the pointer leaves, and collapses normally if the pointer never
-  entered;
-- `hoverToExpand` off: no monitor log line, hover does nothing; on: dwell
-  expands (synthesize a `mouseMoved` stream: cursor warping alone fires no
-  events);
-- autostart pref on -> `AutoStart: SMAppService.mainApp.status = 1` on stderr;
-  off -> `= 0` (run the binary directly to capture stderr);
-- localization tables stay parseable: `plutil -lint hidden/*.lproj/*.strings`.
+Runs both Xcode test targets with Debug-Direct and validates localization tables. Hosted settings tests save and restore the preferences they modify. Test logs and build products stay local.
 
-When testing on a machine that runs Hidden Bar daily: export the prefs domain
-first (`defaults export com.dwarvesv.minimalbar backup.plist`), quit the
-installed app, test the dev build, then re-import and relaunch.
+## Manual checks
 
-## Release
+Before testing with everyday menu-bar icons, export preferences:
 
-1. Verify the stack: every PR reviewed, builds green, behavioral checks above run.
-2. Bump `MARKETING_VERSION` (all four Hidden Bar configurations) and
-   `CURRENT_PROJECT_VERSION` in the project file.
-3. Archive the GitHub build with the **Hidden Bar** scheme
-   (`Release-Direct`), then notarize (Developer ID), staple, zip, and publish a
-   GitHub release with notes listing closed issues. The **Hidden Bar App Store**
-   scheme archives `Release`, the sandboxed App Store build, which cannot hide
-   on macOS 27. v1.11 shipped that build to GitHub by mistake. Before zipping,
-   confirm the app is unsandboxed:
+```sh
+defaults export com.dwarvesv.minimalbar backup.plist
+```
 
-   ```sh
-   codesign -d --entitlements - 'Hidden Bar.app' | grep app-sandbox  # must print nothing
-   ```
-4. App Store (separate lane, **Hidden Bar App Store** scheme): the MAS listing
-   has lagged GitHub since v1.8 (issues #281/#202); decide deliberately whether
-   a release goes there too.
-5. Homebrew cask (`brew install --cask hiddenbar`) follows the GitHub release
-   artifact; notarization matters (issue #219).
-6. Before any public release after the SMAppService migration: one
-   upgrade-path run from a launcher-era build (v1.9 or older) verifying System
-   Settings shows no ghost LauncherApplication login item.
+- General and About keep the same width, with centered tabs and no clipped content.
+- Auto-hide enables/disables its delay control; the delay and ordinary preferences persist after relaunch.
+- Shortcut recording accepts a modified key or standalone function key. Escape, closing the window, or switching tabs cancels it. Bare typing preserves an existing shortcut; Clear removes it. Cmd+W closes the window outside recording.
+- The always-hidden help names the appropriate boundary and Option-click behavior.
+- On macOS 27, the missing-Accessibility explanation appears until permission is granted; the Settings button opens the appropriate System Settings pane.
+- Expand/collapse works with the actual menu-bar arrow and the global shortcut.
+- With auto-hide on, the bar remains expanded while the pointer is in the menu bar, then collapses after the selected delay once it leaves.
+- Right-click opens the context menu and, on a notched display with Accessibility access, exposes notch-overflow items.
+- Verify an external display on real hardware; unit tests cannot establish its live menu-bar behavior.
 
-## Stacked-PR hygiene
+Restore preferences after testing:
 
-Feature stacks land as chained PRs (`develop <- A <- B`). Merge the base PR
-first, then retarget the next PR's base to `develop` BEFORE merging it;
-deleting a merged branch auto-closes dependents otherwise.
+```sh
+defaults import com.dwarvesv.minimalbar backup.plist
+```
 
-## Issue triage map
+## Distribution
 
-The live clusters and their code areas are documented at the end of
-[ARCHITECTURE.md](ARCHITECTURE.md#known-architectural-limits): notch, macOS 27
-mechanism break, and pointer-vs-open-menu limits. Memory reports (#361 et al.)
-have so far not reproduced as leaks (constraint-leak fix landed; `leaks` clean
-over toggle stress); re-check with a 24h+ uptime `footprint` sample before
-chasing further.
+The source is MIT licensed. A local ad-hoc build is not a notarized distribution. A public app release needs a Developer ID archive, notarization and stapling. Use Release-Direct for a direct download; the sandboxed App Store scheme cannot hide icons on macOS 27. Keep signing identities and credentials outside the repository.
