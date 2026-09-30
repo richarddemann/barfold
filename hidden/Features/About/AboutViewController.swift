@@ -33,10 +33,11 @@ private struct AboutSettingsView: View {
     var body: some View {
         VStack(spacing: 20) {
             HStack(spacing: 16) {
-                Image("ic_logo")
+                Image(nsImage: NSApp.applicationIconImage)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 60, height: 60)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Hidden Bar").font(.title2).fontWeight(.semibold)
                     Text("Menu bar cleaner".localized).foregroundStyle(.secondary)
@@ -45,8 +46,8 @@ private struct AboutSettingsView: View {
                 }
             }
             HStack(spacing: 20) {
-                Link("Source code".localized, destination: URL(string: "https://github.com/richarddemann/hiddenbarfix")!)
-                Link("Report an issue".localized, destination: URL(string: "https://github.com/richarddemann/hiddenbarfix/issues")!)
+                Link("Source code".localized, destination: URL(string: "https://github.com/richarddemann/hidden")!)
+                Link("Report an issue".localized, destination: URL(string: "https://github.com/richarddemann/hidden/issues")!)
             }
             VStack(spacing: 6) {
                 Link("Original project".localized, destination: URL(string: "https://github.com/dwarvesf/hidden")!)
