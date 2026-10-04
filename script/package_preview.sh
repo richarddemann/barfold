@@ -18,7 +18,7 @@ xcodebuild -project 'Hidden Bar.xcodeproj' -scheme 'Hidden Bar' \
   -configuration Release-Direct -derivedDataPath "$DERIVED_DATA" \
   CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= \
   ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO \
-  MARKETING_VERSION="$VERSION" CURRENT_PROJECT_VERSION="$BUILD_NUMBER" build
+  MARKETING_VERSION="$VERSION" CURRENT_PROJECT_VERSION="$BUILD_NUMBER" clean build
 APP_BUNDLE="$DERIVED_DATA/Build/Products/Release-Direct/Barfold.app"
 codesign --verify --deep --strict "$APP_BUNDLE"
 APP_ARCHITECTURES="$(lipo -archs "$APP_BUNDLE/Contents/MacOS/Barfold")"
