@@ -247,7 +247,8 @@ struct GeneralSettingsView: View {
     // Strings shared with the old storyboard layout, trimmed of the punctuation
     // that only made sense there, so existing translations keep working.
     private static func label(_ key: String) -> String {
-        return key.localized.trimmingCharacters(in: CharacterSet(charactersIn: ": "))
+        return key.localized.replacingOccurrences(of: "Hidden Bar", with: Constant.appName)
+            .trimmingCharacters(in: CharacterSet(charactersIn: ": "))
     }
 
     private let autoHideDelays = ["5 seconds", "10 seconds", "15 seconds", "30 seconds", "1 minute"]

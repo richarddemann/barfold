@@ -2,7 +2,7 @@
   <img src="hidden/Assets.xcassets/AppIcon.appiconset/icon_128@2x.png" width="96" alt="Barfold icon">
 </p>
 <h1 align="center">Barfold</h1>
-<p align="center">Hidden Bar for macOS 27, with cleaner settings.</p>
+<p align="center">A cleaner menu bar for macOS 27.</p>
 
 Barfold is a fork of **[Hidden Bar](https://github.com/dwarvesf/hidden)** by Dwarves Foundation and its contributors.
 
@@ -12,7 +12,7 @@ Barfold is a fork of **[Hidden Bar](https://github.com/dwarvesf/hidden)** by Dwa
 
 ### Download
 
-[Download Barfold for Mac](https://github.com/richarddemann/barfold/releases/tag/v1.0.0-preview.1) — macOS 13 or later, Apple silicon and Intel. No Xcode needed.
+[Download Barfold for Mac](https://github.com/richarddemann/barfold/releases/tag/v1.0.1-preview.1) — macOS 13 or later, Apple silicon and Intel. No Xcode needed.
 
 Open the DMG and drag Barfold into Applications. Quit Hidden Bar before opening it.
 
@@ -30,13 +30,13 @@ cd barfold
 
 This builds and installs `/Applications/Barfold.app`.
 
-Barfold uses Hidden Bar’s existing settings. Run one at a time; the script stops either app before launching Barfold.
+Barfold copies your previous Hidden Bar settings once, then keeps its own preferences. Run one menu-bar manager at a time.
 
 ### Set it up
 
 On macOS 27, allow Barfold in **System Settings → Privacy & Security → Accessibility**. Hold **⌘** and drag menu-bar icons to the left of the arrow, then click the arrow to hide or show them.
 
-If access stops working after a rebuild, remove the old Accessibility entry and add `/Applications/Barfold.app` again. Local builds use ad-hoc signing, so approval can change when the binary changes.
+Barfold now has its own app identity, so upgrading from the first preview requires approving **Barfold** again. Hidden Bar’s approval is separate. If access stops working after a rebuild, remove only the stale Barfold entry and add `/Applications/Barfold.app` again; local builds use ad-hoc signing.
 
 ### Development
 
