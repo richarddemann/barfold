@@ -29,7 +29,7 @@ Runs both Xcode test targets with Debug-Direct and validates localization tables
 Before testing with everyday menu-bar icons, export preferences:
 
 ```sh
-defaults export com.dwarvesv.minimalbar backup.plist
+defaults export com.richarddemann.barfold backup.plist
 ```
 
 - General and About keep the same width, with centered tabs and no clipped content.
@@ -45,7 +45,7 @@ defaults export com.dwarvesv.minimalbar backup.plist
 Restore preferences after testing:
 
 ```sh
-defaults import com.dwarvesv.minimalbar backup.plist
+defaults import com.richarddemann.barfold backup.plist
 ```
 
 ## Distribution
@@ -56,7 +56,12 @@ The source is MIT licensed. A local ad-hoc build is not a notarized distribution
 To reproduce the universal preview DMG:
 
 ```sh
-./script/package_preview.sh 1.0.0 17
+./script/package_preview.sh 1.0.1 18
 ```
 
-This builds Release-Direct for Apple silicon and Intel, checks its signature and architectures, and writes `dist/Barfold-1.0.0-preview.dmg` and `dist/SHA256SUMS.txt`. It does not install or launch the app, and does not notarize it. The DMG contains Barfold, an Applications shortcut, the MIT license and a short installation note. Upload only those two named release files; `dist` can contain older local artifacts.
+This builds Release-Direct for Apple silicon and Intel, checks its signature and architectures, and writes `dist/Barfold-1.0.1-preview.dmg` and `dist/SHA256SUMS.txt`. It does not install or launch the app, and does not notarize it. The DMG contains Barfold, an Applications shortcut, the MIT license and a short installation note. Upload only those two named release files; `dist` can contain older local artifacts.
+
+
+## Identity and preference migration
+
+The app uses `com.richarddemann.barfold`. Historical Xcode target/module names and translation lookup keys are retained for source compatibility; they are not the installed app’s identity. First launch copies an allowlist of settings and status-item positions from `com.dwarvesv.minimalbar`, then marks migration complete. Existing Barfold settings win. The old preferences, Accessibility approvals and login registrations are left untouched. Migration runs before defaults registration and status-item creation.

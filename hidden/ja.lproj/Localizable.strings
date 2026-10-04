@@ -24,7 +24,7 @@
 /* General settings (moved from Main.storyboard) */
 "Start Hidden Bar when I log in" = "ログインする時 Barfold を起動";
 "Show preferences on launch" = "起動時に環境設定を開く";
-"Use the full MenuBar on expanding" = "アイコンを表示する時に Hidden のメニューバーも表示";
+"Use the full MenuBar on expanding" = "アイコンを表示する時に Barfold のメニューバーも表示";
 "Enable always hidden section" = "「アイコンを常に非表示機能」を有効にする";
 "Automatically hide icon after: " = "一定時間を経つと自動的にアイコンを非表示する: ";
 "Global Shortcut" = "グローバルショットキー";

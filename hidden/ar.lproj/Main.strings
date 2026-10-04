@@ -2,22 +2,22 @@
 "1Is-Ut-a9h.title" = "الإعدادات";
 
 /* Class = "NSMenuItem"; title = "Barfold"; ObjectID = "1Xt-HY-uBw"; */
-"1Xt-HY-uBw.title" = "الشريط المخفي";
+"1Xt-HY-uBw.title" = "Barfold";
 
 /* Class = "NSTextFieldCell"; title = "⭐️Always Hidden"; ObjectID = "1jU-1x-cFf"; */
 "1jU-1x-cFf.title" = "⭐️مخفي دائما";
 
 /* Class = "NSTextFieldCell"; title = "Barfold"; ObjectID = "2xp-Ht-xa6"; */
-"2xp-Ht-xa6.title" = "الشريط المخفي";
+"2xp-Ht-xa6.title" = "Barfold";
 
 /* Class = "NSTextFieldCell"; title = "Version"; ObjectID = "4Au-5A-dYq"; */
 "4Au-5A-dYq.title" = "الإصدار";
 
 /* Class = "NSMenuItem"; title = "Quit Barfold"; ObjectID = "4sb-4s-VLi"; */
-"4sb-4s-VLi.title" = "إنهاء الشريط المخفي";
+"4sb-4s-VLi.title" = "إنهاء Barfold";
 
 /* Class = "NSMenuItem"; title = "About Barfold"; ObjectID = "5kV-Vb-QxS"; */
-"5kV-Vb-QxS.title" = "حول الشريط المخفي";
+"5kV-Vb-QxS.title" = "حول Barfold";
 
 /* Class = "NSButtonCell"; title = "Use the full MenuBar on expanding"; ObjectID = "8z8-6N-wnc"; */
 "8z8-6N-wnc.title" = "استخدم كامل شريط القائمة عند التوسيع";
@@ -68,7 +68,7 @@
 "Nhn-ch-1f7.title" = "تمكين القسم المخفي دائما";
 
 /* Class = "NSMenuItem"; title = "Hide Barfold"; ObjectID = "Olw-nP-bQN"; */
-"Olw-nP-bQN.title" = "أخف الشريط المخفي";
+"Olw-nP-bQN.title" = "أخف Barfold";
 
 /* Class = "NSTextFieldCell"; title = "Follow us on Twitter"; ObjectID = "Tba-C7-Zr8"; */
 "Tba-C7-Zr8.title" = "تابعنا على تويتر";
@@ -77,7 +77,7 @@
 "Vdr-fp-XzO.title" = "أخف الآخرين";
 
 /* Class = "NSButtonCell"; title = "Start Barfold when I log in"; ObjectID = "W1G-55-zGo"; */
-"W1G-55-zGo.title" = "شغل الشريط المخفي عندما أقوم بتسجيل الدخول";
+"W1G-55-zGo.title" = "شغل Barfold عندما أقوم بتسجيل الدخول";
 
 /* Class = "NSTextFieldCell"; title = "Menu bar cleaner"; ObjectID = "X4W-sr-Z32"; */
 "X4W-sr-Z32.title" = "منظف شريط القائمة";
@@ -116,7 +116,7 @@
 "iyS-g5-5mk.title" = "ظاهر";
 
 /* Class = "NSTextFieldCell"; title = "In your Mac's menu bar, hold ⌘ and drag icons\nbetween sections to configure Barfold."; ObjectID = "k7C-e5-6a0"; */
-"k7C-e5-6a0.title" = "في شريط القائمة الخاص بـMac الخاص بك، استمر بالضغط على ⌘ واسحب الأيقونات\nبين الأقسام لتكوين الشريط المخفي.";
+"k7C-e5-6a0.title" = "في شريط القائمة الخاص بـMac الخاص بك، استمر بالضغط على ⌘ واسحب الأيقونات\nبين الأقسام لتكوين Barfold.";
 
 /* Class = "NSButtonCell"; title = "Automatically hide icon after: "; ObjectID = "kg8-rW-srh"; */
 "kg8-rW-srh.title" = "أخف الأيقونة تلقائيا بعد: ";
@@ -131,7 +131,7 @@
 "sRr-sO-uV0.title" = "راسلنا إلكنرونيا";
 
 /* Class = "NSMenu"; title = "Barfold"; ObjectID = "uQy-DD-JDr"; */
-"uQy-DD-JDr.title" = "الشريط المخفي";
+"uQy-DD-JDr.title" = "Barfold";
 
 /* Class = "NSMenuItem"; title = "10 seconds"; ObjectID = "z2X-nw-vxX"; */
 "z2X-nw-vxX.title" = "١٠ ثوان";

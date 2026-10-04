@@ -1,6 +1,6 @@
 # Manual
 
-Everything Hidden Bar can do, including the parts with no UI.
+Barfold settings and menu-bar controls. Barfold is a fork of [Hidden Bar](https://github.com/dwarvesf/hidden).
 
 ## Basics
 
@@ -25,14 +25,14 @@ section is enabled.
   expanded.
 - Hiding is per app: an app with several icons hides or shows them together.
 - macOS's own items (clock, Wi-Fi, Sound, Control Center) always stay visible.
-- Run Hidden Bar from `/Applications` and keep one copy running. Multiple
+- Run Barfold from `/Applications` and keep one copy running. Multiple
   registered copies can interfere with native recognition of its arrow.
 
 ## Preferences window
 
 | Setting | What it does |
 |---|---|
-| Start Hidden Bar when I log in | Login item via System Settings (macOS 13+ `SMAppService`); revocable in System Settings > General > Login Items |
+| Start Barfold when I log in | Login item via System Settings (macOS 13+ `SMAppService`); revocable in System Settings > General > Login Items |
 | Show preferences on launch | Open this window at app start |
 | Auto collapse | Re-hide automatically after the chosen delay |
 | Global shortcut | System-wide expand/collapse hotkey (F-keys display as F18, not Fn18) |
@@ -63,34 +63,34 @@ All via `defaults`; quit and relaunch the app after changing them.
 
 ```sh
 # expand by hovering the menu bar for ~0.5s (off by default)
-defaults write com.dwarvesv.minimalbar hoverToExpand -bool true
+defaults write com.richarddemann.barfold hoverToExpand -bool true
 
 # auto-collapse delay in seconds (the UI offers a fixed list; any value works)
-defaults write com.dwarvesv.minimalbar numberOfSecondForAutoHide -float 5
+defaults write com.richarddemann.barfold numberOfSecondForAutoHide -float 5
 
 # force the app language regardless of system order (issue #287)
-defaults write com.dwarvesv.minimalbar AppleLanguages '(en)'
+defaults write com.richarddemann.barfold AppleLanguages '(en)'
 ```
 
-To undo any of them: `defaults delete com.dwarvesv.minimalbar <key>`.
+To undo any of them: `defaults delete com.richarddemann.barfold <key>`.
 
 ## Troubleshooting
 
 | Symptom | Fix |
 |---|---|
 | Icons I want visible got hidden after an update | ⌘-drag them to the right of the separator |
-| Login item missing after denying it once | System Settings > General > Login Items: re-enable Hidden Bar, then toggle the pref off/on |
-| A ghost "LauncherApplication" login item from old versions | Launch the current version once; it deauthorizes the legacy item automatically |
+| Login item missing after denying it once | System Settings > General > Login Items: re-enable Barfold, then toggle the pref off/on |
+| Both Barfold and Hidden Bar launch at login | Disable Hidden Bar in Login Items and keep Barfold enabled. Barfold does not change Hidden Bar’s registration. |
 | App language stuck | See the `AppleLanguages` command above, or System Settings > General > Language & Region > Applications |
 | Nothing hides on macOS 27 | Use the direct build in Applications and grant Accessibility access. The sandboxed App Store build cannot read sections there. |
 | A new or just-updated app's icon shows up already hidden | Expected, see "Why new icons start hidden" below; ⌘-drag it to the right of the separator once |
 
 ### Why new icons start hidden
 
-On macOS 13–26, Hidden Bar hides icons by widening its separator so everything to the *left* of
+On macOS 13–26, Barfold hides icons by widening its separator so everything to the *left* of
 it slides off-screen. macOS always inserts a brand-new menu-bar icon at the
 far-left slot, which is inside that hidden zone, so a freshly launched or updated
-app can appear "swallowed". This is macOS positioning behavior, not Hidden Bar
+app can appear "swallowed". This is macOS positioning behavior, not Barfold
 moving your icon: there is no way for one app to reposition another app's menu-bar
 icon. The one-time fix is to ⌘-drag the icon to the right of the separator;
 macOS remembers that placement per app. A built-in way to keep chosen icons
@@ -102,4 +102,11 @@ On macOS 27, native visibility keeps the most recently read sections until the n
 
 macOS 13 Ventura or later. Pre-Ventura (10.13 - 12.x): use
 [v1.10](https://github.com/dwarvesf/hidden/releases/tag/v1.10), the last release
-on the old autostart mechanism.
+of the original Hidden Bar on the old autostart mechanism.
+
+
+### Upgrading from the first Barfold preview
+
+Barfold now uses `com.richarddemann.barfold`, separate from Hidden Bar’s `com.dwarvesv.minimalbar`. On its first launch it copies supported preferences, your shortcut, app language and saved status-item positions without overwriting existing Barfold choices. Later changes stay separate.
+
+Accessibility approvals cannot be migrated. Approve the new Barfold entry in Privacy & Security → Accessibility (Device Control and Data Access on some macOS builds). Barfold does not reset Hidden Bar’s approval or unregister its login item. Use one menu-bar manager at a time.

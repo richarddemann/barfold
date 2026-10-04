@@ -14,7 +14,7 @@ import ServiceManagement
 
 class AppDelegate: NSObject, NSApplicationDelegate{
     
-    var statusBarController = StatusBarController()
+    lazy var statusBarController = StatusBarController()
 
     var hotKey: HotKey? {
         didSet {
@@ -28,14 +28,16 @@ class AppDelegate: NSObject, NSApplicationDelegate{
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         guard ensureSingleInstance() else { return }
-        setupAutoStartApp()
+        PreferenceMigration.migrate()
         registerDefaultValues()
+        _ = statusBarController
+        setupAutoStartApp()
         setupHotKey()
         openPreferencesIfNeeded()
         detectLTRLang()
     }
 
-    /// Hidden Bar is a menu bar utility with no visible window, so launching it a
+    /// Barfold is a menu bar utility with no visible window, so launching it a
     /// second time looks like a no-op while silently spawning a duplicate instance.
     /// If another instance with the same bundle ID is already running, activate it
     /// and terminate this one instead.
@@ -65,19 +67,9 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     }
     
     func setupAutoStartApp() {
-        removeLegacyLauncherLoginItem()
         Util.setUpAutoStart(isAutoStart: Preferences.isAutoStart)
     }
 
-    private func removeLegacyLauncherLoginItem() {
-        // Builds before the SMAppService migration registered a helper app in BTM;
-        // macOS never garbage-collects that record (TN3111), so deauthorize it once.
-        let migratedKey = "smAppServiceMigrated"
-        guard !UserDefaults.standard.bool(forKey: migratedKey) else { return }
-        SMLoginItemSetEnabled("com.dwarvesv.LauncherApplication" as CFString, false)
-        UserDefaults.standard.set(true, forKey: migratedKey)
-    }
-    
     // A plain value, separate from the side-effecting `register(defaults:)`
     // call, so the "what are the defaults" behavior is testable without
     // spinning up an AppDelegate (which creates real status bar items).

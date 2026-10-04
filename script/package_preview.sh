@@ -3,10 +3,10 @@
 set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
-VERSION="${1:-1.0.0}"
-BUILD_NUMBER="${2:-17}"
+VERSION="${1:-1.0.1}"
+BUILD_NUMBER="${2:-18}"
 if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ || ! "$BUILD_NUMBER" =~ ^[0-9]+$ ]]; then
-  echo "usage: $0 [version, e.g. 1.0.0] [build number]" >&2
+  echo "usage: $0 [version, e.g. 1.0.1] [build number]" >&2
   exit 2
 fi
 DERIVED_DATA="$ROOT_DIR/build/release-preview"
@@ -18,7 +18,7 @@ xcodebuild -project 'Hidden Bar.xcodeproj' -scheme 'Hidden Bar' \
   -configuration Release-Direct -derivedDataPath "$DERIVED_DATA" \
   CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= \
   ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO \
-  MARKETING_VERSION="$VERSION" CURRENT_PROJECT_VERSION="$BUILD_NUMBER" build
+  MARKETING_VERSION="$VERSION" CURRENT_PROJECT_VERSION="$BUILD_NUMBER" clean build
 APP_BUNDLE="$DERIVED_DATA/Build/Products/Release-Direct/Barfold.app"
 codesign --verify --deep --strict "$APP_BUNDLE"
 APP_ARCHITECTURES="$(lipo -archs "$APP_BUNDLE/Contents/MacOS/Barfold")"
@@ -36,6 +36,9 @@ Barfold preview — a fork of Hidden Bar
 https://github.com/richarddemann/barfold
 
 Drag Barfold into Applications. Quit Hidden Bar before opening Barfold.
+Barfold copies supported preferences once and now has its own app identity.
+Its Accessibility approval must be granted separately from Hidden Bar.
+
 On macOS 27, allow Barfold in Privacy & Security → Accessibility
 (called Device Control and Data Access on some macOS builds).
 
